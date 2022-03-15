@@ -14,6 +14,7 @@ CREATE TABLE ortak (
 	fiyat INT NOT NULL,
 	boyut INT NOT NULL,
 	aciklama VARCHAR(500),
+	dosya_yolu VARCHAR(30),
 	PRIMARY KEY (ortak_id),
 	CONSTRAINT fk_adres
 		FOREIGN KEY (adres_id)
