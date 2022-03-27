@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Malatya Emlak</title>
         <h:outputStylesheet library="css" name="bootstrap.css" />
@@ -70,159 +71,75 @@
                 </div>
             </div>
             <div class="container mt-4">
-                <h1 class="bolum2">Öne Çıkan İlanlar</h1>
+                <h1 class="text-center text-black-50"> <p class="bg-light">Öne Çıkan İlanlar</p></h1>
                 <hr></hr>
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class=" img-thumbnail card mb-4 shadow-sm">
-                            <img class="" src="resources/img/2.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Günlük Kiralık Villa</p>
-                                <em>Ölüdeniz'de muhteşem eylul fırsatı (4+1 özel havuzlu villa)</em>
+                    <h:form>
+                        Kategori Başlığı: <h:inputText value="#{categoryBean.entity.title}" />
+                        Fiyat: <h:inputText value="#{categoryBean.entity.fiyat}" />
+                        Açıklama: <h:inputText value="#{categoryBean.entity.aciklama}" />
+                        <h:commandButton action="#{categoryBean.create}" value="Kaydet" />
+                        <p><br/></p>
+                    </h:form>
+                    <h:form>
+                        <h:dataTable value="#{categoryBean.list}" var="c">
+                            <h:column>
+                                <f:facet name="header">
+                                    <p class="text-primary shadow-sm text">ID</p>
+                                </f:facet>
+                                #{c.id}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                                 <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"> <strong>900 TL</strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class=" img-thumbnail card mb-4 shadow-sm">
-                            <img src="resources/img/3.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Satılık Villa</p>
-                                <em>Ayın fırsatı ! marmaris'te tam müstakil havuzlu rüya gibi villa</em>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <p class="text-primary shadow-sm">İlan Türü</p>
+                                </f:facet>
+                                #{c.title}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                                 <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"><strong>1.300.000 TL </strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="img-thumbnail card mb-4 shadow-sm">
-                            <img src="resources/img/4.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Satılık Villa</p>
-                                <em>Muğla göcek'te ultra lüks villa!</em>
-                                <br></br>
-                                <br></br>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <p class="text-primary shadow-sm">Fiyat</p>
+                                </f:facet>
+                                #{c.fiyat} ₺
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                                 <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"><strong>3.950.000 TL</strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="img-thumbnail card mb-4 shadow-sm">
-                            <img src="resources/img/5.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Satılık Villa</p>
-                                <em>Yalıkavak'da doğa içerisinde lüks tek kat 3+1 villa</em>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <p class="text-primary shadow-sm text-center">İlan Tarihi</p>
+                                </f:facet>
+                                #{c.created}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                                 <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"><strong>3.150.000 TL</strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="img-thumbnail card mb-4 shadow-sm">
-                            <img src="resources/img/6.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Satılık Villa</p>
-                                <em>Didim satılık 4+1 ayrı mutfaklı full eşyalı havuzlu 200 m2 villa</em>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <p class="text-primary shadow-sm text-center mr-4"> Açıklama</p>
+                                </f:facet>
+                                #{c.aciklama}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                                 <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"><strong>410.000 TL</strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="img-thumbnail card mb-4 shadow-sm">
-                            <img src="resources/img/7.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Satılık Villa</p>
-                                <em>Yalıkavak bağarasında özel dekorasyonlu 4+2 müstakil villa</em>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <p class="text-primary shadow-sm text-center">Resim</p>
+                                </f:facet>
+                                #{c.updated}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                                 <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"><strong>3.200.000 TL</strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="img-thumbnail card mb-4 shadow-sm">
-                            <img src="resources/img/8.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Satılık Daire</p>
-                                <em>Marmaris merkezde yeni bina 3+1 satılık daireler</em>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <p class="text-primary shadow-sm">Sil</p>
+                                </f:facet>
+                                <h:commandButton action="#{categoryBean.delete(c)}" value="Sil" />
                                 <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"><strong>700.000 TL</strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="img-thumbnail card mb-4 shadow-sm">
-                            <img src="resources/img/9.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Satılık Daire</p>
-                                <em>Fener'de Terra City yakın yatırımlık 2+1 daire</em>
-                                <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"><strong>310.000 TL</strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="img-thumbnail card mb-4 shadow-sm">
-                            <img src="resources/img/0.jpg" alt=""/>
-                            <div class="card-body">
-                                <p class="card-text">Satılık Daire</p>
-                                <em>
-                                    Muratpaşa fener ultra lüks site 2+1 satılık daire
-                                </em>
-                                <hr></hr>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">İncele</button>
-                                    </div>
-                                    <small class="text-muted"><strong>675.000 TL</strong></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
                 </div>
             </div>
         </div>
@@ -243,7 +160,7 @@
                         <h5 class="mt-4 text-white">Bize Ulaşın</h5>
                         <hr></hr>
                         <ul class="list-unstyled list-group list-group-horizontal col-md-2 container">
-                            
+
                             <li class="p-2">
                                 <a class="text-decoration-none" href="#!"><img src="resources/img/facebook.png" alt=""/> Facebook</a>
                             </li>
