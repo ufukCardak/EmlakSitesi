@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Malatya Emlak Bahçeler</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:commandButton action="/index" value="Home" />
+        </h:form>
+        <hr/>
+        <h:form>
+            Il: <h:inputText value="#{adresBean.entity.il}" />
+            Ilce: <h:inputText value="#{adresBean.entity.ilce}" />
+            Mahalle: <h:inputText value="#{adresBean.entity.mahalle}" />
+            Sokak: <h:inputText value="#{adresBean.entity.sokak}" />
+            No: <h:inputText value="#{adresBean.entity.no}" />
+            <br/>
+            <br/>
+            Fiyat: <h:inputText value="#{ortakBean.entity.fiyat}" />
+            Boyut: <h:inputText value="#{ortakBean.entity.boyut}" />
+            Aciklama: <h:inputText value="#{ortakBean.entity.aciklama}" />
+            Dosya Yolu:  <h:inputText value="#{ortakBean.entity.dosya_yolu}" />
+            <br/>
+            <br/>
+            <h1>Bahce Bilgileri</h1>
+            Tapu durumu: <h:inputText value="#{bahceBean.entity.tapu_durumu}" />
+            İmar durumu: <h:inputText value="#{bahceBean.entity.imar_durumu}" />
+            
+            <h1>Kullanici Bilgileri</h1>
+            Kullanici Adi: <h:inputText value="#{kullaniciBean.entity.kullanici_ad}" />
+            Isim: <h:inputText value="#{kullaniciBean.entity.isim}" />
+            Soyisim: <h:inputText value="#{kullaniciBean.entity.soyad}" />
+            Email: <h:inputText value="#{kullaniciBean.entity.email}" />
+            Sifre: <h:inputText value="#{kullaniciBean.entity.sifre}" />
+            Telefon No: <h:inputText value="#{kullaniciBean.entity.tel_no}" />
+
+            <h:commandButton rendered="#{bahceBean.entity.id==0}" action="#{bahceBean.create(adresBean.entity.id,kullaniciBean.entity.kullanici_ad)}" value="Kaydet" >
+                <f:actionListener binding="#{adresBean.create()}" />
+                <f:actionListener binding="#{ortakBean.create(adresBean.entity.id)}" />
+                <f:actionListener binding="#{kullaniciBean.create()}" />
+            </h:commandButton>
+
+            <h:commandButton rendered="#{bahceBean.entity.id!=0}" action="#{ortakBean.update()}" value="Update" > 
+                <f:actionListener binding="#{bahceBean.update()}" />
+                <f:actionListener binding="#{adresBean.update()}" />
+                <f:actionListener binding="#{kullaniciBean.update()}" />
+            </h:commandButton>
+
+            <h:commandButton rendered="#{bahceBean.entity.id!=0}" action="#{ortakBean.clear}" value="clearForm" >
+                <f:actionListener binding="#{bahceBean.clear()}" />
+                <f:actionListener binding="#{adresBean.clear()}" />
+                <f:actionListener binding="#{kullaniciBean.clear()}" />
+            </h:commandButton>
+            <p><br/></p>
+        </h:form>
+        <h:form>
+            <h:dataTable value="#{bahceBean.list}" var="c">
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text">ID</p>
+                    </f:facet>
+                    #{c.id}
+                    
+                    <hr></hr>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Adres</p>
+                    </f:facet>
+                    #{c.ortak_id.adres.il}
+                    #{c.ortak_id.adres.ilce}
+                    #{c.ortak_id.adres.mahalle}
+                    #{c.ortak_id.adres.sokak}/#{c.ortak_id.adres.no}
+                    
+                    <hr></hr>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Fiyat</p>
+                    </f:facet>
+                    #{c.ortak_id.fiyat} ₺
+                     
+                    <hr></hr>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Boyut</p>
+                    </f:facet>
+                    #{c.ortak_id.boyut} m^2
+                     
+                    <hr></hr>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center mr-4"> Açıklama</p>
+                    </f:facet>
+                    #{c.ortak_id.aciklama}
+                    
+                    <hr></hr>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Bahce Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold">Tapu durumu: </span> #{c.tapu_durumu}                   
+                    <span style="font-weight:bold">İmar durumu: </span> #{c.imar_durumu}
+                    <hr></hr>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Kullanici Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold"> Kullanici Ad: </span> #{c.kullanici_adi.kullanici_ad}
+                    <span style="font-weight:bold">Email: </span> #{c.kullanici_adi.email}
+                    <span style="font-weight:bold">Tel No: </span> #{c.kullanici_adi.tel_no}
+                     
+                    <hr></hr>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Resim</p>
+                    </f:facet>
+                    #{c.ortak_id.dosya_yolu}
+                    
+                    <hr></hr>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Sil/Guncelle</p>
+                    </f:facet>
+
+                    <h:commandButton action="#{bahceBean.delete(c)}" value="Sil">
+                        <f:actionListener binding="#{adresBean.delete(c.ortak_id.adres)}" />
+                        <f:actionListener binding="#{kullaniciBean.delete(c.kullanici_adi)}" />
+                        <f:actionListener binding="#{ortakBean.delete(c.ortak_id)}" />
+                    </h:commandButton>
+
+
+                    <h:commandButton action="#{bahceBean.setEntity(c)}" value="Edit" >
+                        <f:actionListener binding="#{adresBean.setEntity(c.ortak_id.adres)}" />
+                        <f:actionListener binding="#{kullaniciBean.setEntity(c.kullanici_adi)}" />
+                        <f:actionListener binding="#{ortakBean.setEntity(c.ortak_id)}" />
+                    </h:commandButton>
+
+                    <hr></hr>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
