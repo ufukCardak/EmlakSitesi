@@ -7,18 +7,26 @@ CREATE TABLE adres (
 	no INT,
 	PRIMARY KEY(adres_id)
 );
-
+create table dosya(
+	id serial primary key,
+	name varchar,
+	path varchar
+);
 CREATE TABLE ortak (
 	ortak_id SERIAL,
 	adres_id INT,
+	dosya_id INT,
 	fiyat INT NOT NULL,
 	boyut INT NOT NULL,
 	aciklama VARCHAR(500),
-	dosya_yolu VARCHAR(30),
 	PRIMARY KEY (ortak_id),
 	CONSTRAINT fk_adres
 		FOREIGN KEY (adres_id)
 			REFERENCES adres(adres_id)
+			ON DELETE CASCADE,
+		CONSTRAINT fk_dosya
+		FOREIGN KEY (dosya_id)
+			REFERENCES dosya(id)
 			ON DELETE CASCADE	
 );
 
@@ -29,6 +37,7 @@ CREATE TABLE kullanici (
 	email VARCHAR(50) NOT NULL,
 	sifre VARCHAR(50) NOT NULL,
 	tel_no VARCHAR(50) NOT NULL,
+	admin boolean,
 	PRIMARY KEY (kullanici_adi)
 );
 
