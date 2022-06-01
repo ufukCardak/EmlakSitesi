@@ -2,8 +2,9 @@
 Kullanıcılar kayıtlı olan emlak ilanlarını görebilecek veya kendileri ilan ekleme, güncelleme veya silme yapabilecekler 
 # PROJE AŞAMALARI
 -->Final Gösterimi
--Bütün tablolar için CRUD işlemleri yapıldı
-- Create(C)
+
+ -Bütün tablolar için CRUD işlemleri yapıldı
+ -Create(C)
  -Read(R) - Tekil(Tek kaydın okunması)
  -Read(R) - Liste(Tablo için liste kaydının okunması)
  -Update(U)
