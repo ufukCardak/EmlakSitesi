@@ -17,22 +17,28 @@
                     </a>
                     <ul class="list-unstyled navbar-brand d-flex ">
                         <li class=" mt-1 mr-3 p-2">
-                            <a class="text-white text-decoration-none" href="#"><img src="resources/img/anasayfa.png" alt=""/>Anasayfa</a>
+                            <h:form>
+                                <h2><img src="resources/img/anasayfa.png" alt=""/><h:commandButton  class="btn btn-lg btn-outline-danger btn-close-white text-white" value="Anasayfa" ></h:commandButton></h2>
+                            </h:form>
+                        </li>
+                        <li class=" mt-1 mr-3 p-2">
+                            <h:form>
+                                <h2><img src="resources/img/hakkimizda.png" alt=""/><h:commandButton  class="btn btn-lg btn-outline-danger btn-close-white text-white" value="Hakkimizda" ></h:commandButton></h2>
+                            </h:form>
                         </li>
                         <li class=" mt-1 mr-4 p-2">
-
-                            <a class="text-white text-decoration-none" href="#"><img src="resources/img/hakkimizda.png" alt=""/>Hakkımızda</a>
+                            <h:form>
+                                <h2><img src="resources/img/iletisim.png" alt=""/><h:commandButton  class="btn btn-lg btn-outline-danger btn-close-white text-white" value="İletişim" ></h:commandButton></h2>
+                            </h:form>
                         </li>
                         <li class=" mt-1 mr-4 p-2">
-                            <a class=" text-white text-decoration-none" href="#"><img src="resources/img/iletisim.png" alt=""/> İletişim</a>
-                        </li>
-                        <li class=" mt-1 mr-4 p-2">
-                            <a class="text-white text-decoration-none" href="#"><img src="resources/img/ilan.png" alt=""/> İlan Ekle </a>
+                            <h:form>
+                                <h2><img src="resources/img/ilan.png" alt=""/><h:commandButton  class="btn btn-lg btn-outline-danger btn-close-white text-white" action="/panel/IlanEkle?faces-redirect=true" value="Ilan Ekle" ></h:commandButton></h2>
+                            </h:form>
                         </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
                             aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
                     </button>
                 </div>
             </div>
@@ -44,7 +50,6 @@
                 <h5 class="text-white pt-0">“Türkiyenin Emlak portalı, temelinde güven ve huzur var.”</h5>
             </div>
         </section>
-
         <div class="album py-5">
             <div class="container col-md-8">
                 <h3 class="mt-5"></h3>
@@ -52,41 +57,289 @@
                     Kategoriler
                     <hr></hr>
                 </h2>
-                <div class="list-group list-group-horizontal">
-                    <a href="#" class="list-group-item list-group-item-action active">
-                        <h5><img src="resources/img/star.png" alt=""/> Öne Çıkan İlanlar</h5>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <h5><img src="resources/img/Villa.jpg" alt=""/> Villa</h5>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <h5><img src="resources/img/daire.jpg" alt=""/> Daire</h5>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
-                        <h5><img src="resources/img/tarla.jpg" alt=""/> Tarla</h5>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
-                        <h5><img src="resources/img/arsa.jpg" alt=""/> Arsa</h5>
-                    </a>
-                </div>
-            </div>
-            <div class="container mt-4">
-                <h1 class="text-center text-black-50"> <p class="bg-light">Öne Çıkan İlanlar</p></h1>
-                <hr></hr>
                 <div class="row">
-                    <h:form>
-                        <h:commandButton action="/panel/Daire" value="Daire" />
-                        &nbsp;
-                        <h:commandButton action="/panel/Villa" value="Villa" />
-                        &nbsp;
-                        <h:commandButton action="/panel/Tarla" value="Tarla" />
-                        &nbsp;
-                        <h:commandButton action="/panel/Bahce" value="Bahce" />
-                    </h:form>
+                    <div class="col-md-3 ">
+                        <h:form>
+                            <h5><img src="resources/img/daire.jpg" alt=""/><h:commandButton class="btn btn-outline-success" value="Daire" action="#{daireBean.entity.setId(1)}"/></h5>
+                        </h:form>
+                    </div>
+                    <div class="col-md-3">
+                        <h:form>
+                            <h5><img src="resources/img/villa.jpg" alt=""/><h:commandButton class="btn btn-outline-success" value="Villa" action="#{villaBean.entity.setId(1)}"/></h5>
+                        </h:form>
+                    </div>
+                    <div class="col-md-3">
+                        <h:form>
+                            <h5><img src="resources/img/tarla.jpg" alt=""/><h:commandButton class="btn btn-outline-success" value="Tarla" action="#{tarlaBean.entity.setId(1)}"/></h5>
+                        </h:form>
+                    </div>
+                    <div class="col-md-3">
+                        <h:form>
+                            <h5><img src="resources/img/arsa.jpg" alt=""/><h:commandButton class="btn btn-outline-success" value="Bahce" action="#{bahceBean.entity.setId(1)}"/></h5>
+                        </h:form>
+                    </div>
                 </div>
             </div>
         </div>
+        <h:form rendered="#{daireBean.entity.id!=0}" class="container">
+            <tr>
+                <h3>Page: #{daireBean.page}/#{daireBean.pageCount}</h3>
+            </tr>
+            <h:commandButton class="btn btn-outline-info" action="#{daireBean.previous}" value="Prev" />
+            <h:commandButton class="btn btn-outline-info" action="#{daireBean.next}" value="next" />
+            <h:dataTable styleClass="table table-striped" value="#{daireBean.getPagList()}"  var="c">
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text">ID</p>
+                    </f:facet>
+                    #{c.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Adres</p>
+                    </f:facet>
+                    #{c.ortak_id.adres.il}
+                    #{c.ortak_id.adres.ilce}
+                    #{c.ortak_id.adres.mahalle}
+                    #{c.ortak_id.adres.sokak}/#{c.ortak_id.adres.no}
+                </h:column>
 
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Fiyat</p>
+                    </f:facet>
+                    #{c.ortak_id.fiyat} ₺
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Boyut</p>
+                    </f:facet>
+                    #{c.ortak_id.boyut} m^2
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center mr-4"> Açıklama</p>
+                    </f:facet>
+                    #{c.ortak_id.aciklama}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Daire Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold">Oda: </span> #{c.oda_sayisi}                   
+                    <span style="font-weight:bold">Bina Yaşı: </span> #{c.bina_yasi}
+                    <span style="font-weight:bold">Isıtma: </span> #{c.isitma_tipi}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Kullanici Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold"> Kullanici Ad: </span> #{c.kullanici_adi.kullanici_ad}
+                    <span style="font-weight:bold">Email: </span> #{c.kullanici_adi.email}
+                    <span style="font-weight:bold">Tel No: </span> #{c.kullanici_adi.tel_no}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Resim</p>
+                    </f:facet>
+
+                    <h:graphicImage width="300" value="/file/#{c.ortak_id.dosya.fileName}" />
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form rendered="#{villaBean.entity.id!=0}" class="container">
+            <tr>
+                <h3>Page: #{villaBean.page}/#{villaBean.pageCount}</h3>
+            </tr>
+            <h:commandButton class="btn btn-outline-info" action="#{villaBean.previous}" value="Prev" />
+            <h:commandButton class="btn btn-outline-info" action="#{villaBean.next}" value="next" />
+            <h:dataTable styleClass="table table-striped" value="#{villaBean.getPagList()}" var="c">
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text">ID</p>
+                    </f:facet>
+                    #{c.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Adres</p>
+                    </f:facet>
+                    #{c.ortak_id.adres.il}
+                    #{c.ortak_id.adres.ilce}
+                    #{c.ortak_id.adres.mahalle}
+                    #{c.ortak_id.adres.sokak}/#{c.ortak_id.adres.no}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Fiyat</p>
+                    </f:facet>
+                    #{c.ortak_id.fiyat} ₺
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Boyut</p>
+                    </f:facet>
+                    #{c.ortak_id.boyut} m^2
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center mr-4"> Açıklama</p>
+                    </f:facet>
+                    #{c.ortak_id.aciklama}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Villa Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold">Kat Sayisi: </span> #{c.kat_sayisi}                   
+                    <span style="font-weight:bold">Oda Sayisi: </span> #{c.oda_sayisi}
+                    <span style="font-weight:bold">Havuz: </span> #{c.havuz} m^2
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Kullanici Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold"> Kullanici Ad: </span> #{c.kullanici_adi.kullanici_ad}
+                    <span style="font-weight:bold">Email: </span> #{c.kullanici_adi.email}
+                    <span style="font-weight:bold">Tel No: </span> #{c.kullanici_adi.tel_no}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Resim</p>
+                    </f:facet>
+                    <h:graphicImage width="300" value="/file/#{c.ortak_id.dosya.fileName}" />
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form rendered="#{tarlaBean.entity.id!=0}" class="container">
+            <tr>
+                <h3>Page: #{tarlaBean.page}/#{tarlaBean.pageCount}</h3>
+            </tr>
+            <h:commandButton class="btn btn-outline-info" action="#{tarlaBean.previous}" value="Prev" />
+            <h:commandButton class="btn btn-outline-info" action="#{tarlaBean.next}" value="next" />
+            <h:dataTable styleClass="table table-striped" value="#{tarlaBean.getPagList()}" var="c">
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text">ID</p>
+                    </f:facet>
+                    #{c.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Adres</p>
+                    </f:facet>
+                    #{c.ortak_id.adres.il}
+                    #{c.ortak_id.adres.ilce}
+                    #{c.ortak_id.adres.mahalle}
+                    #{c.ortak_id.adres.sokak}/#{c.ortak_id.adres.no}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Fiyat</p>
+                    </f:facet>
+                    #{c.ortak_id.fiyat} ₺
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Boyut</p>
+                    </f:facet>
+                    #{c.ortak_id.boyut} m^2
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center mr-4"> Açıklama</p>
+                    </f:facet>
+                    #{c.ortak_id.aciklama}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Tapu Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold">Kay Sayisi: </span> #{c.tapu_durumu}                   
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Kullanici Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold"> Kullanici Ad: </span> #{c.kullanici_adi.kullanici_ad}
+                    <span style="font-weight:bold">Email: </span> #{c.kullanici_adi.email}
+                    <span style="font-weight:bold">Tel No: </span> #{c.kullanici_adi.tel_no}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Resim</p>
+                    </f:facet>
+
+                    <h:graphicImage width="300" value="/file/#{c.ortak_id.dosya.fileName}" />
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form rendered="#{bahceBean.entity.id!=0}" class="container">
+            <tr>
+                <h3>Page: #{bahceBean.page}/#{bahceBean.pageCount}</h3>
+            </tr>
+            <h:commandButton class="btn btn-outline-info" action="#{bahceBean.previous}" value="Prev" />
+            <h:commandButton class="btn btn-outline-info" action="#{bahceBean.next}" value="next" />
+            <h:dataTable styleClass="table table-striped" value="#{bahceBean.getPagList()}" var="c">
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text">ID</p>
+                    </f:facet>
+                    #{c.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Adres</p>
+                    </f:facet>
+                    #{c.ortak_id.adres.il}
+                    #{c.ortak_id.adres.ilce}
+                    #{c.ortak_id.adres.mahalle}
+                    #{c.ortak_id.adres.sokak}/#{c.ortak_id.adres.no}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Fiyat</p>
+                    </f:facet>
+                    #{c.ortak_id.fiyat} ₺
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Boyut</p>
+                    </f:facet>
+                    #{c.ortak_id.boyut} m^2
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center mr-4"> Açıklama</p>
+                    </f:facet>
+                    #{c.ortak_id.aciklama}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Bahce Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold">Tapu Durumu: </span> #{c.tapu_durumu}                   
+                    <span style="font-weight:bold">İmar Durumu: </span> #{c.imar_durumu}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Kullanici Bilgileri</p>
+                    </f:facet>
+                    <span style="font-weight:bold"> Kullanici Ad: </span> #{c.kullanici_adi.kullanici_ad}
+                    <span style="font-weight:bold">Email: </span> #{c.kullanici_adi.email}
+                    <span style="font-weight:bold">Tel No: </span> #{c.kullanici_adi.tel_no}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm text-center">Resim</p>
+                    </f:facet>
+                    <h:graphicImage width="300" value="/file/#{c.ortak_id.dosya.fileName}" />
+                </h:column>
+            </h:dataTable>
+        </h:form>
         <footer class=" bg-dark page-footer font-small blue pt-4">
             <div class="container-fluid text-center text-md-left">
                 <div class="row">

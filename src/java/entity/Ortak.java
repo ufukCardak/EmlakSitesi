@@ -12,21 +12,30 @@ public class Ortak {
 
     private int id;
     private Adres adres;
+    private Dosya dosya;
     private int fiyat;
     private int boyut;
     private String aciklama;
-    private String dosya_yolu;
 
     public Ortak() {
     }
 
-    public Ortak(int id, Adres adres, int fiyat, int boyut, String aciklama, String dosya_yolu) {
+    public Ortak(int id, Adres adres, Dosya dosya, int fiyat, int boyut, String aciklama) {
         this.id = id;
         this.adres = adres;
+        this.dosya = dosya;
         this.fiyat = fiyat;
         this.boyut = boyut;
         this.aciklama = aciklama;
-        this.dosya_yolu = dosya_yolu;
+    }
+
+
+    public Dosya getDosya() {
+        return dosya;
+    }
+
+    public void setDosya(Dosya dosya) {
+        this.dosya = dosya;
     }
 
     public int getId() {
@@ -68,14 +77,6 @@ public class Ortak {
 
     public void setAciklama(String aciklama) {
         this.aciklama = aciklama;
-    }
-
-    public String getDosya_yolu() {
-        return dosya_yolu;
-    }
-
-    public void setDosya_yolu(String dosya_yolu) {
-        this.dosya_yolu = dosya_yolu;
     }
 
 }

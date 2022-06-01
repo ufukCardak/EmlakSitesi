@@ -6,155 +6,68 @@
 
     <h:head>
         <title>Ilan Ekleme veya Düzenleme</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />   
     </h:head>
     <h:body>
-        <h:form>
-            <h:commandButton action="/index" value="Home" />
-            <h:commandButton action="/panel/Tarla" value="Tarla" />
-        </h:form>
-        <hr/>
-        <h:form>
-            Il: <h:inputText value="#{adresBean.entity.il}" />
-            Ilce: <h:inputText value="#{adresBean.entity.ilce}" />
-            Mahalle: <h:inputText value="#{adresBean.entity.mahalle}" />
-            Sokak: <h:inputText value="#{adresBean.entity.sokak}" />
-            No: <h:inputText value="#{adresBean.entity.no}" />
-            <br/>
-            <br/>
-            Fiyat: <h:inputText value="#{ortakBean.entity.fiyat}" />
-            Boyut: <h:inputText value="#{ortakBean.entity.boyut}" />
-            Aciklama: <h:inputText value="#{ortakBean.entity.aciklama}" />
-            Dosya Yolu:  <h:inputText value="#{ortakBean.entity.dosya_yolu}" />
-            <br/>
-            <br/>
-            <h1>Daire Bilgileri</h1>
-            Oda Sayısı: <h:inputText value="#{daireBean.entity.oda_sayisi}" />
-            Bina Yaşı: <h:inputText value="#{daireBean.entity.bina_yasi}" />
-            Isıtma Tipi: <h:inputText value="#{daireBean.entity.isitma_tipi}" />
-
-            <h1>Kullanici Bilgileri</h1>
-            Kullanici Adi: <h:inputText value="#{kullaniciBean.entity.kullanici_ad}" />
-            Isim: <h:inputText value="#{kullaniciBean.entity.isim}" />
-            Soyisim: <h:inputText value="#{kullaniciBean.entity.soyad}" />
-            Email: <h:inputText value="#{kullaniciBean.entity.email}" />
-            Sifre: <h:inputText value="#{kullaniciBean.entity.sifre}" />
-            Telefon No: <h:inputText value="#{kullaniciBean.entity.tel_no}" />
-
-            <h:commandButton rendered="#{daireBean.entity.id==0}" action="#{daireBean.create(adresBean.entity.id,kullaniciBean.entity.kullanici_ad)}" value="Kaydet" >
-                <f:actionListener binding="#{adresBean.create()}" />
-                <f:actionListener binding="#{ortakBean.create(adresBean.entity.id)}" />
-                <f:actionListener binding="#{kullaniciBean.create()}" />
-            </h:commandButton>
-
-            <h:commandButton rendered="#{daireBean.entity.id!=0}" action="#{ortakBean.update()}" value="Update" > 
-                <f:actionListener binding="#{daireBean.update()}" />
-                <f:actionListener binding="#{adresBean.update()}" />
-                <f:actionListener binding="#{kullaniciBean.update()}" />
-            </h:commandButton>
-
-            <h:commandButton rendered="#{daireBean.entity.id!=0}" action="#{ortakBean.clear}" value="clearForm" >
-                <f:actionListener binding="#{daireBean.clear()}" />
-                <f:actionListener binding="#{adresBean.clear()}" />
-                <f:actionListener binding="#{kullaniciBean.clear()}" />
-            </h:commandButton>
-            <p><br/></p>
-        </h:form>
-        <h:form>
-            <h:dataTable value="#{daireBean.list}" var="c">
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm text">ID</p>
-                    </f:facet>
-                    #{c.id}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <hr></hr>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm">Adres</p>
-                    </f:facet>
-                    #{c.ortak_id.adres.il}
-                    #{c.ortak_id.adres.ilce}
-                    #{c.ortak_id.adres.mahalle}
-                    #{c.ortak_id.adres.sokak}/#{c.ortak_id.adres.no}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <hr></hr>
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm">Fiyat</p>
-                    </f:facet>
-                    #{c.ortak_id.fiyat} ₺
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <hr></hr>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm text-center">Boyut</p>
-                    </f:facet>
-                    #{c.ortak_id.boyut} m^2
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <hr></hr>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm text-center mr-4"> Açıklama</p>
-                    </f:facet>
-                    #{c.ortak_id.aciklama}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <hr></hr>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm text-center">Daire Bilgileri</p>
-                    </f:facet>
-                    <span style="font-weight:bold">Oda: </span> #{c.oda_sayisi}                   
-                    <span style="font-weight:bold">Bina Yaşı: </span> #{c.bina_yasi}
-                    <span style="font-weight:bold">Isıtma: </span> #{c.isitma_tipi}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <hr></hr>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm text-center">Kullanici Bilgileri</p>
-                    </f:facet>
-                    <span style="font-weight:bold"> Kullanici Ad: </span> #{c.kullanici_adi.kullanici_ad}
-                    <span style="font-weight:bold">Email: </span> #{c.kullanici_adi.email}
-                    <span style="font-weight:bold">Tel No: </span> #{c.kullanici_adi.tel_no}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <hr></hr>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm text-center">Resim</p>
-                    </f:facet>
-                    #{c.ortak_id.dosya_yolu}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <hr></hr>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <p class="text-primary shadow-sm">Sil/Guncelle</p>
-                    </f:facet>
-
-                    <h:commandButton action="#{daireBean.delete(c)}" value="Sil">
-                        <f:actionListener binding="#{adresBean.delete(c.ortak_id.adres)}" />
-                        <f:actionListener binding="#{kullaniciBean.delete(c.kullanici_adi)}" />
-                        <f:actionListener binding="#{ortakBean.delete(c.ortak_id)}" />
+        <div class="container row">
+            <div class="col-md-2"></div>
+            <div class="col">
+                <h:form>
+                    <br/>
+                    <h:commandButton action="/index?faces-redirect=true" value="Anasayfa" styleClass="btn btn-outline-dark" />
+                    <br/>
+                    <br/>
+                    <h:commandButton action="/panel/Daire?faces-redirect=true" value="Daire" styleClass="btn btn-danger" >
+                        <f:actionListener binding="#{daireBean.clear()}" />
+                        <f:actionListener binding="#{adresBean.clear()}" />
+                        <f:actionListener binding="#{ortakBean.clear()}" />
                     </h:commandButton>
-
-
-                    <h:commandButton action="#{daireBean.setEntity(c)}" value="Edit" >
-                        <f:actionListener binding="#{adresBean.setEntity(c.ortak_id.adres)}" />
-                        <f:actionListener binding="#{kullaniciBean.setEntity(c.kullanici_adi)}" />
-                        <f:actionListener binding="#{ortakBean.setEntity(c.ortak_id)}" />
+                    &nbsp;
+                    <h:commandButton action="/panel/Villa?faces-redirect=true" value="Villa" styleClass="btn btn-danger" >
+                        <f:actionListener binding="#{villaBean.clear()}" />
+                        <f:actionListener binding="#{adresBean.clear()}" />
+                        <f:actionListener binding="#{ortakBean.clear()}" />
                     </h:commandButton>
+                    &nbsp;
+                    <h:commandButton action="/panel/Tarla?faces-redirect=true" value="Tarla" styleClass="btn btn-danger">
+                        <f:actionListener binding="#{tarlaBean.clear()}" />
+                        <f:actionListener binding="#{adresBean.clear()}" />
+                        <f:actionListener binding="#{ortakBean.clear()}" />
+                    </h:commandButton>
+                    &nbsp;
+                    <h:commandButton action="/panel/Bahce?faces-redirect=true" value="Bahce" styleClass="btn btn-danger">
+                        <f:actionListener binding="#{bahceBean.clear()}" />
+                        <f:actionListener binding="#{adresBean.clear()}" />
+                        <f:actionListener binding="#{ortakBean.clear()}" />
+                    </h:commandButton>
+                    &nbsp;
 
-                    <hr></hr>
-                </h:column>
-            </h:dataTable>
-        </h:form>
+                </h:form>
+            </div>
+            <div class="col row">
+                <div class="col">
+                    <h:form>
+                        <h1>Giriş Yap</h1>
+                        <hr/>
+                        Kullanici Adi: <h:inputText  required="true" requiredMessage="Kullanici Adi giriniz!" value="#{kullaniciBean.entity.kullanici_ad}" /> <br /><br />
+
+                        Sifre: <h:inputText required="true" requiredMessage="Şifre giriniz!" validator="#{kullaniciBean.validatePassword}" value="#{kullaniciBean.entity.sifre}" /><br /><br />
+
+                        <h:commandButton rendered="#{kullaniciBean.entity.kullanici_ad==null}" action="#{kullaniciBean.login(kullaniciBean.entity.kullanici_ad,kullaniciBean.entity.sifre)}" styleClass="btn btn-primary" value="Giriş" />
+                        <h:commandButton rendered="#{kullaniciBean.entity.kullanici_ad!=null}" action="#{kullaniciBean.logout}" styleClass="btn btn-dark" value="Çıkış" />
+                    </h:form>
+                    <h:messages />
+                </div>
+                <div>
+                    <h:form>
+                        <h:commandButton rendered="#{kullaniciBean.entity.kullanici_ad==null}" action="/panel/Kullanici?faces-redirect=true" value="Üye ol" styleClass="btn btn-info"/>
+                    </h:form>  
+                </div>
+
+
+
+            </div>
+        </div>
     </h:body>
 </html>
 

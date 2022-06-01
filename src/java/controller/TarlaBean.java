@@ -19,9 +19,12 @@ import java.util.List;
 @SessionScoped
 public class TarlaBean implements Serializable {
 
-private Tarla entity;
+    private Tarla entity;
     private TarlaDAO dao;
     private List<Tarla> list;
+
+    private int page = 1;
+    private int pageCount = 0;
 
     public TarlaBean() {
     }
@@ -75,5 +78,38 @@ private Tarla entity;
     public void clear() {
         entity = new Tarla();
     }
-    
+        public List<Tarla> getPagList() {
+        this.list = this.getDao().getTarlaList(page);
+        return list;
+    }
+        public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageCount() {
+        List<Tarla> gList = this.getDao().getTarlaList();
+        double size = gList.size();
+        pageCount = (int)Math.ceil(size/5);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+    public void previous(){
+        page--;
+        if (page < 1) {
+            page = this.getPageCount();
+        }
+    }
+    public void next(){
+        page++;
+        if (page > this.getPageCount()) {
+            page = 1;
+        }
+    }
 }

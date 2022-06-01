@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Kullanici</title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+    </h:head>
+    <h:body>
+        <h:form styleClass="">
+            <h:commandButton action="/index?faces-redirect=true" value="Anasayfa" styleClass="btn btn-outline-dark" />
+            <h:commandButton action="/panel/IlanEkle?faces-redirect=true" value="Geri" styleClass="btn btn-outline-dark" />
+        </h:form>
+        <div>
+            <div class="container row">
+                <div class="col-md-4 p-lg-5">
+                    <h:form id="table">
+
+                        <h1>Kayit Ol</h1>
+                        <hr/>
+                        Kullanici Adi: <h:inputText id="kname" required="true" requiredMessage="Kullanici Adi giriniz!" value="#{kullaniciBean.entity.kullanici_ad}" /> <br />
+                        <h:message for="kname" /> <br/><br/>
+                        Sifre: <h:inputText id="pass" required="true" requiredMessage="Şifre giriniz!" validator="#{kullaniciBean.validatePassword}" value="#{kullaniciBean.entity.sifre}" /><br />
+                        <h:message for="pass" /> <br/><br/>
+                        Isim: <h:inputText value="#{kullaniciBean.entity.isim}" /><br /><br />
+                        Soyisim: <h:inputText value="#{kullaniciBean.entity.soyad}" /><br /><br />
+                        Email: <h:inputText value="#{kullaniciBean.entity.email}" /><br /><br />
+                        Telefon No: <h:inputText value="#{kullaniciBean.entity.tel_no}" /> <br /><br />
+                        Admin Yetki: <h:selectBooleanCheckbox value="#{kullaniciBean.entity.adminYetki}"/><br/><br/>
+
+                        <h:commandButton styleClass="btn btn-outline-secondary" rendered="#{kullaniciBean.entity.kullanici_ad==null}" action="#{kullaniciBean.create}" value="Kaydet" />
+
+                        <h:commandButton styleClass="btn btn-outline-secondary" rendered="#{kullaniciBean.entity.kullanici_ad!=null}" action="#{kullaniciBean.update()}" value="Güncelle" /> 
+
+                        <h:commandButton styleClass="btn btn-outline-secondary" rendered="#{kullaniciBean.entity.kullanici_ad!=null}" action="#{kullaniciBean.clear()}" value="Yeni üye" /> 
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <h:form id="form">
+            <h:dataTable styleClass="table table-striped" value="#{kullaniciBean.list}" var="c">
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary mx-4">Kullanici Adı</p>
+                    </f:facet>
+                    #{c.kullanici_ad}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary mx-4">İsim</p>
+                    </f:facet>
+                    #{c.isim}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary mx-4">Soyisim</p>
+                    </f:facet>
+                    #{c.soyad}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary text-center mx-4">Email</p>
+                    </f:facet>
+                    #{c.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary text-center mx-4"> Şifre</p>
+                    </f:facet>
+                    #{c.sifre}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary text-center mx-4"> Telefon No</p>
+                    </f:facet>
+                    #{c.tel_no}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary text-center mx-4"> Admin</p>
+                    </f:facet>
+                    #{c.adminYetki}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <p class="text-primary shadow-sm">Sil/Guncelle</p>
+                    </f:facet>
+
+                    <h:commandButton action="#{kullaniciBean.delete(c)}" value="Sil"/>
+
+                    <h:commandButton action="#{kullaniciBean.setEntity(c)}" value="Edit" />
+
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>

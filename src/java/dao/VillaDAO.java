@@ -60,7 +60,27 @@ public class VillaDAO extends DBConnection{
             System.out.println(ex.getMessage());
         }
     }
+    public List<Villa> getVillaList(int page) {
+        int offset = (page-1)*5;
+        List<Villa> list = new ArrayList<>();
+        try {
+            Statement st = this.getConnection().createStatement();
 
+            String query = "select * from villa limit 5 offset " + offset;
+
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                Ortak o = this.getOrtakDao().findByID(rs.getInt("ortak_id"));
+                Kullanici k = this.getKullaniciDao().findByString(rs.getString("kullanici_adi"));
+                
+                list.add(new Villa(rs.getInt("villa_id"), o,k,rs.getInt("kat_sayisi"), rs.getString("oda_sayisi"), rs.getString("havuz")));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list;
+    }
     public List<Villa> getVillaList() {
         List<Villa> list = new ArrayList<>();
         try {

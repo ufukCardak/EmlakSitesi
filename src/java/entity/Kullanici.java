@@ -16,18 +16,29 @@ public class Kullanici {
     private String email;
     private String sifre;
     private String tel_no;
-
+    private boolean adminYetki;
+    
     public Kullanici() {
     }
 
-    public Kullanici(String kullanici_ad, String isim, String soyad, String email, String sifre, String tel_no) {
+    public Kullanici(String kullanici_ad, String isim, String soyad, String email, String sifre, String tel_no, boolean adminYetki) {
         this.kullanici_ad = kullanici_ad;
         this.isim = isim;
         this.soyad = soyad;
         this.email = email;
         this.sifre = sifre;
         this.tel_no = tel_no;
+        this.adminYetki = adminYetki;
     }
+
+    /*public Kullanici(String kullanici_ad, String isim, String soyad, String email, String sifre, String tel_no) {
+        this.kullanici_ad = kullanici_ad;
+        this.isim = isim;
+        this.soyad = soyad;
+        this.email = email;
+        this.sifre = sifre;
+        this.tel_no = tel_no;
+    }*/
 
     public String getKullanici_ad() {
         return kullanici_ad;
@@ -77,4 +88,11 @@ public class Kullanici {
         this.tel_no = tel_no;
     }
 
+    public boolean isAdminYetki() {
+        return adminYetki;
+    }
+
+    public void setAdminYetki(boolean adminYetki) {
+        this.adminYetki = adminYetki;
+    }
 }

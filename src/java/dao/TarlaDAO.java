@@ -59,13 +59,33 @@ public class TarlaDAO extends DBConnection{
             System.out.println(ex.getMessage());
         }
     }
-
     public List<Tarla> getTarlaList() {
         List<Tarla> list = new ArrayList<>();
         try {
             Statement st = this.getConnection().createStatement();
 
             String query = "select * from tarla";
+
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                Ortak o = this.getOrtakDao().findByID(rs.getInt("ortak_id"));
+                Kullanici k = this.getKullaniciDao().findByString(rs.getString("kullanici_adi"));
+                
+                list.add(new Tarla(rs.getInt("tarla_id"), o,k, rs.getString("tapu_durumu")));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list;
+    }
+    public List<Tarla> getTarlaList(int page) {
+        int offset = (page-1)*5;
+        List<Tarla> list = new ArrayList<>();
+        try {
+            Statement st = this.getConnection().createStatement();
+
+            String query = "select * from tarla limit 5 offset " + offset;
 
             ResultSet rs = st.executeQuery(query);
 

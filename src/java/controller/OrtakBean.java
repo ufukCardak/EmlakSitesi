@@ -27,8 +27,8 @@ public class OrtakBean implements Serializable {
 
     }
 
-    public void create(int adres_id) {
-        this.getDao().create(entity, adres_id);
+    public void create(int adres_id,int dosya_id) {
+        this.getDao().create(entity, adres_id,dosya_id);
         //entity = new Ortak();
     }
 

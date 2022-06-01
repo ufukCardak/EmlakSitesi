@@ -60,7 +60,27 @@ public class BahceDAO extends DBConnection{
             System.out.println(ex.getMessage());
         }
     }
+    public List<Bahce> getBahceList(int page) {
+        int offset = (page-1)*5;
+        List<Bahce> list = new ArrayList<>();
+        try {
+            Statement st = this.getConnection().createStatement();
 
+            String query = "select * from bahce limit 5 offset " + offset;
+
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                Ortak o = this.getOrtakDao().findByID(rs.getInt("ortak_id"));
+                Kullanici k = this.getKullaniciDao().findByString(rs.getString("kullanici_adi"));
+                
+                list.add(new Bahce(rs.getInt("bahce_id"), o,k, rs.getString("tapu_durumu"), rs.getString("imar_durumu")));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list;
+    }
     public List<Bahce> getBahceList() {
         List<Bahce> list = new ArrayList<>();
         try {

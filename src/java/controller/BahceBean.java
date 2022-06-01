@@ -18,9 +18,13 @@ import java.util.List;
 @Named(value = "bahceBean")
 @SessionScoped
 public class BahceBean implements Serializable {
-private Bahce entity;
+
+    private Bahce entity;
     private BahceDAO dao;
     private List<Bahce> list;
+    
+    private int page = 1;
+    private int pageCount = 0;
 
     public BahceBean() {
     }
@@ -57,7 +61,10 @@ private Bahce entity;
         }
         return dao;
     }
-
+    public List<Bahce> getPagList() {
+        this.list = this.getDao().getBahceList(page);
+        return list;
+    }
     public void setDao(BahceDAO dao) {
         this.dao = dao;
     }
@@ -74,5 +81,37 @@ private Bahce entity;
     public void clear() {
         entity = new Bahce();
     }
-    
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageCount() {
+        List<Bahce> gList = this.getDao().getBahceList();
+        double size = gList.size();
+        pageCount = (int) Math.ceil(size / 5);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public void previous() {
+        page--;
+        if (page < 1) {
+            page = this.getPageCount();
+        }
+    }
+
+    public void next() {
+        page++;
+        if (page > this.getPageCount()) {
+            page = 1;
+        }
+    }
 }

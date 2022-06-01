@@ -23,6 +23,9 @@ public class DaireBean implements Serializable {
     private DaireDAO dao;
     private List<Daire> list;
 
+    private int page = 1;
+    private int pageCount = 0;
+    
     public DaireBean() {
     }
 
@@ -36,8 +39,8 @@ public class DaireBean implements Serializable {
         this.entity = new Daire();
     }
 
-    public void create(int ortak_id, String kullanici_ad) {
-        this.getDao().create(entity, ortak_id, kullanici_ad);
+    public void create(int ortak_id,String kullanici_ad) {
+        this.getDao().create(entity, ortak_id,kullanici_ad);
         this.entity = new Daire();
     }
 
@@ -67,12 +70,46 @@ public class DaireBean implements Serializable {
         this.list = this.getDao().getDaireList();
         return list;
     }
-
+    public List<Daire> getPagList() {
+        this.list = this.getDao().getDaireList(page);
+        return list;
+    }
     public void setList(List<Daire> list) {
         this.list = list;
     }
 
     public void clear() {
         entity = new Daire();
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageCount() {
+        List<Daire> gList = this.getDao().getDaireList(); 
+        double size = gList.size();
+        pageCount = (int)Math.ceil(size/5);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+    public void previous(){
+        page--;
+        if (page < 1) {
+            page = this.getPageCount();
+        }
+    }
+    public void next(){
+        page++;
+        if (page > this.getPageCount()) {
+            page = 1;
+        }
     }
 }

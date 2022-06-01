@@ -61,7 +61,28 @@ public class DaireDAO extends DBConnection {
             System.out.println(ex.getMessage());
         }
     }
+    public List<Daire> getDaireList(int page) {
+        int offset = (page-1)*5;
+        
+        List<Daire> list = new ArrayList<>();
+        try {
+            Statement st = this.getConnection().createStatement();
 
+            String query = "select * from daire limit 5 offset " + offset;
+
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                Ortak o = this.getOrtakDao().findByID(rs.getInt("ortak_id"));
+                Kullanici k = this.getKullaniciDao().findByString(rs.getString("kullanici_adi"));
+                
+                list.add(new Daire(rs.getInt("daire_id"), o,k, rs.getString("oda_sayisi"), rs.getInt("bina_yasi"), rs.getString("isitma_tipi")));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return list;
+    }
     public List<Daire> getDaireList() {
         List<Daire> list = new ArrayList<>();
         try {

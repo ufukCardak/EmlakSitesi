@@ -8,6 +8,10 @@ import dao.AdresDAO;
 import entity.Adres;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.validator.ValidatorException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,7 +30,13 @@ public class AdresBean implements Serializable {
     public AdresBean() {
 
     }
-
+    public boolean validateAdress(FacesContext context, UIComponent cmp, Object value) throws ValidatorException {
+        String v = (String) value;
+        if (v.isEmpty()) {
+            throw new ValidatorException(new FacesMessage("*İl alanı boş olamaz!"));
+        }
+        return true;
+    }
     public void create() {
         this.getDao().create(entity);
         //entity = new Adres();

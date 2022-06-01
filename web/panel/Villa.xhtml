@@ -9,67 +9,60 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Malatya Emlak Villalar </title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
     </h:head>
     <h:body>
         <h:form>
-            <h:commandButton action="/index" value="Home" />s
+            <br/>
+            <h:commandButton action="/index?faces-redirect=true" value="Anasayfa" styleClass="btn btn-outline-dark" />
+            <h:commandButton action="/panel/IlanEkle?faces-redirect=true" value="Geri" styleClass="btn btn-outline-dark" />
+            <br/>
         </h:form>
-        <hr/>
-        <h:form>
-            Il: <h:inputText value="#{adresBean.entity.il}" />
+        <br/>
+        <br></br>
+        <h:form enctype="multipart/form-data">
+            <h1>Adres Bilgileri</h1>
+            Il: <h:inputText id="adres" validator="#{adresBean.validateAdress}" value="#{adresBean.entity.il}" />
+            <h:message class="text-danger" for="adres" />
             Ilce: <h:inputText value="#{adresBean.entity.ilce}" />
             Mahalle: <h:inputText value="#{adresBean.entity.mahalle}" />
             Sokak: <h:inputText value="#{adresBean.entity.sokak}" />
             No: <h:inputText value="#{adresBean.entity.no}" />
-            <br/>
-            <br/>
-            Fiyat: <h:inputText value="#{ortakBean.entity.fiyat}" />
-            Boyut: <h:inputText value="#{ortakBean.entity.boyut}" />
-            Aciklama: <h:inputText value="#{ortakBean.entity.aciklama}" />
-            Dosya Yolu:  <h:inputText value="#{ortakBean.entity.dosya_yolu}" />
+            Fotoğraf: <h:inputFile value="#{dosyaBean.dos}" />
             <br/>
             <br/>
             <h1>Villa Bilgileri</h1>
+            Fiyat: <h:inputText value="#{ortakBean.entity.fiyat}" />
+            Boyut: <h:inputText value="#{ortakBean.entity.boyut}" />
+            Aciklama: <h:inputText value="#{ortakBean.entity.aciklama}" />
             Kat Sayısı: <h:inputText value="#{villaBean.entity.kat_sayisi}" />
             Oda Sayisi: <h:inputText value="#{villaBean.entity.oda_sayisi}" />
             Havuz: <h:inputText value="#{villaBean.entity.havuz}" />
 
-            <h1>Kullanici Bilgileri</h1>
-            Kullanici Adi: <h:inputText value="#{kullaniciBean.entity.kullanici_ad}" />
-            Isim: <h:inputText value="#{kullaniciBean.entity.isim}" />
-            Soyisim: <h:inputText value="#{kullaniciBean.entity.soyad}" />
-            Email: <h:inputText value="#{kullaniciBean.entity.email}" />
-            Sifre: <h:inputText value="#{kullaniciBean.entity.sifre}" />
-            Telefon No: <h:inputText value="#{kullaniciBean.entity.tel_no}" />
-
-            <h:commandButton rendered="#{villaBean.entity.id==0}" action="#{villaBean.create(adresBean.entity.id,kullaniciBean.entity.kullanici_ad)}" value="Kaydet" >
+            <h:commandButton styleClass="btn btn-outline-secondary" rendered="#{villaBean.entity.id==0}" action="#{villaBean.create(ortakBean.entity.id,kullaniciBean.entity.kullanici_ad)}" value="Kaydet" >
+                <f:actionListener binding="#{dosyaBean.upload()}" />
                 <f:actionListener binding="#{adresBean.create()}" />
-                <f:actionListener binding="#{ortakBean.create(adresBean.entity.id)}" />
-                <f:actionListener binding="#{kullaniciBean.create()}" />
+                <f:actionListener binding="#{ortakBean.create(adresBean.entity.id,dosyaBean.dosya.id)}" />
             </h:commandButton>
 
-            <h:commandButton rendered="#{villaBean.entity.id!=0}" action="#{ortakBean.update()}" value="Update" > 
+            <h:commandButton styleClass="btn btn-outline-secondary" rendered="#{villaBean.entity.id!=0}" action="#{ortakBean.update()}" value="Güncelle" > 
                 <f:actionListener binding="#{villaBean.update()}" />
                 <f:actionListener binding="#{adresBean.update()}" />
-                <f:actionListener binding="#{kullaniciBean.update()}" />
             </h:commandButton>
 
-            <h:commandButton rendered="#{villaBean.entity.id!=0}" action="#{ortakBean.clear}" value="clearForm" >
+            <h:commandButton styleClass="btn btn-outline-secondary" rendered="#{villaBean.entity.id!=0}" action="#{ortakBean.clear}" value="Yeni Kayıt" >
                 <f:actionListener binding="#{villaBean.clear()}" />
                 <f:actionListener binding="#{adresBean.clear()}" />
-                <f:actionListener binding="#{kullaniciBean.clear()}" />
             </h:commandButton>
             <p><br/></p>
         </h:form>
         <h:form>
-            <h:dataTable value="#{villaBean.list}" var="c">
+            <h:dataTable styleClass="table table-striped" value="#{villaBean.list}" var="c">
                 <h:column>
                     <f:facet name="header">
                         <p class="text-primary shadow-sm text">ID</p>
                     </f:facet>
                     #{c.id}
-                    
-                    <hr></hr>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
@@ -79,8 +72,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     #{c.ortak_id.adres.ilce}
                     #{c.ortak_id.adres.mahalle}
                     #{c.ortak_id.adres.sokak}/#{c.ortak_id.adres.no}
-                    
-                    <hr></hr>
+
                 </h:column>
 
                 <h:column>
@@ -88,24 +80,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                         <p class="text-primary shadow-sm">Fiyat</p>
                     </f:facet>
                     #{c.ortak_id.fiyat} ₺
-                     
-                    <hr></hr>
+
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         <p class="text-primary shadow-sm text-center">Boyut</p>
                     </f:facet>
                     #{c.ortak_id.boyut} m^2
-                     
-                    <hr></hr>
+
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         <p class="text-primary shadow-sm text-center mr-4"> Açıklama</p>
                     </f:facet>
                     #{c.ortak_id.aciklama}
-                    
-                    <hr></hr>
+
                 </h:column>
                 <h:column>
                     <f:facet name="header">
@@ -113,9 +102,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     </f:facet>
                     <span style="font-weight:bold">Kay Sayisi: </span> #{c.kat_sayisi}                   
                     <span style="font-weight:bold">Oda Sayisi: </span> #{c.oda_sayisi}
-                    <span style="font-weight:bold">Havuz: </span> #{c.havuz}
-                     
-                    <hr></hr>
+                    <span style="font-weight:bold">Havuz: </span> #{c.havuz} m^2
+
                 </h:column>
                 <h:column>
                     <f:facet name="header">
@@ -124,36 +112,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                     <span style="font-weight:bold"> Kullanici Ad: </span> #{c.kullanici_adi.kullanici_ad}
                     <span style="font-weight:bold">Email: </span> #{c.kullanici_adi.email}
                     <span style="font-weight:bold">Tel No: </span> #{c.kullanici_adi.tel_no}
-                     
-                    <hr></hr>
+
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         <p class="text-primary shadow-sm text-center">Resim</p>
                     </f:facet>
-                    #{c.ortak_id.dosya_yolu}
-                    
-                    <hr></hr>
+
+                    <h:graphicImage width="300" value="/file/#{c.ortak_id.dosya.fileName}" />
+
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         <p class="text-primary shadow-sm">Sil/Guncelle</p>
                     </f:facet>
 
-                    <h:commandButton action="#{villaBean.delete(c)}" value="Sil">
+                    <h:commandButton styleClass="btn btn-outline-danger" action="#{villaBean.delete(c)}" value="Sil">
                         <f:actionListener binding="#{adresBean.delete(c.ortak_id.adres)}" />
-                        <f:actionListener binding="#{kullaniciBean.delete(c.kullanici_adi)}" />
                         <f:actionListener binding="#{ortakBean.delete(c.ortak_id)}" />
                     </h:commandButton>
 
 
-                    <h:commandButton action="#{villaBean.setEntity(c)}" value="Edit" >
+                    <h:commandButton styleClass="btn btn-outline-info" action="#{villaBean.setEntity(c)}" value="Edit" >
                         <f:actionListener binding="#{adresBean.setEntity(c.ortak_id.adres)}" />
-                        <f:actionListener binding="#{kullaniciBean.setEntity(c.kullanici_adi)}" />
                         <f:actionListener binding="#{ortakBean.setEntity(c.ortak_id)}" />
                     </h:commandButton>
 
-                    <hr></hr>
                 </h:column>
             </h:dataTable>
         </h:form>

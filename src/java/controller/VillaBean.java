@@ -22,7 +22,9 @@ public class VillaBean implements Serializable {
     private Villa entity;
     private VillaDAO dao;
     private List<Villa> list;
-
+    
+    private int page = 1;
+    private int pageCount = 0;
     public VillaBean() {
     }
 
@@ -74,5 +76,38 @@ public class VillaBean implements Serializable {
 
     public void clear() {
         entity = new Villa();
+    }
+        public int getPage() {
+        return page;
+    }
+    public List<Villa> getPagList() {
+        this.list = this.getDao().getVillaList(page);
+        return list;
+    }
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageCount() {
+        List<Villa> gList = this.getDao().getVillaList();
+        double size = gList.size();
+        pageCount = (int)Math.ceil(size/5);
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+    public void previous(){
+        page--;
+        if (page < 1) {
+            page = this.getPageCount();
+        }
+    }
+    public void next(){
+        page++;
+        if (page > this.getPageCount()) {
+            page = 1;
+        }
     }
 }

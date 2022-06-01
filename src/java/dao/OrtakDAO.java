@@ -5,6 +5,7 @@
 package dao;
 
 import entity.Adres;
+import entity.Dosya;
 import entity.Ortak;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -19,6 +20,7 @@ import util.DBConnection;
 public class OrtakDAO extends DBConnection {
 
     private AdresDAO adresDao;
+    private DosyaDAO dosyaDao;
 
     public Ortak findByID(int id) {
         Ortak o = null;
@@ -31,9 +33,10 @@ public class OrtakDAO extends DBConnection {
 
             while (rs.next()) {
                 Adres a = this.getAdresDao().findByID(rs.getInt("adres_id"));
+                Dosya d = this.getDosyaDao().findByID(rs.getInt("dosya_id"));
 
-                o = new Ortak(rs.getInt("ortak_id"), a, rs.getInt("fiyat"), rs.getInt("boyut"),
-                        rs.getString("aciklama"), rs.getString("dosya_yolu"));
+                o = new Ortak(rs.getInt("ortak_id"), a, d, rs.getInt("fiyat"), rs.getInt("boyut"),
+                        rs.getString("aciklama"));
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -41,7 +44,7 @@ public class OrtakDAO extends DBConnection {
         return o;
     }
 
-    public void create(Ortak c, int adres_id) {
+    public void create(Ortak c, int adres_id, int dosya_id) {
 
         String query = null;
 
@@ -49,7 +52,7 @@ public class OrtakDAO extends DBConnection {
 
             Statement st = this.getConnection().createStatement();
 
-            query = "insert into ortak(adres_id,fiyat,boyut,aciklama,dosya_yolu) values ('" + adres_id + "','" + c.getFiyat() + "','" + c.getBoyut() + "','" + c.getAciklama() + "','" + c.getDosya_yolu() + "')RETURNING ortak_id";
+            query = "insert into ortak(adres_id,dosya_id,fiyat,boyut,aciklama) values ('" + adres_id + "','" + dosya_id + "','" + c.getFiyat() + "','" + c.getBoyut() + "','" + c.getAciklama() + "')RETURNING ortak_id";
 
             System.out.println("Ortak query " + query);
 
@@ -82,7 +85,7 @@ public class OrtakDAO extends DBConnection {
 
             String query = "update ortak set "
                     + "fiyat='" + c.getFiyat() + "',boyut='" + c.getBoyut() + "',"
-                    + "aciklama='" + c.getAciklama() + "', dosya_yolu='" + c.getDosya_yolu() + "' where ortak_id=" + c.getId();
+                    + "aciklama='" + c.getAciklama() + "' where ortak_id=" + c.getId();
 
             int r = st.executeUpdate(query);
         } catch (Exception ex) {
@@ -100,8 +103,8 @@ public class OrtakDAO extends DBConnection {
 
             while (rs.next()) {
                 Adres a = this.getAdresDao().findByID(rs.getInt("adres_id"));
-
-                list.add(new Ortak(rs.getInt("ortak_id"), a, rs.getInt("fiyat"), rs.getInt("boyut"), rs.getString("aciklama"), rs.getString("dosya_yolu")));
+                Dosya d = this.getDosyaDao().findByID(rs.getInt("dosya_id"));
+                list.add(new Ortak(rs.getInt("ortak_id"), a,d, rs.getInt("fiyat"), rs.getInt("boyut"), rs.getString("aciklama")));
             }
 
         } catch (Exception ex) {
@@ -119,6 +122,17 @@ public class OrtakDAO extends DBConnection {
 
     public void setAdresDao(AdresDAO adresDao) {
         this.adresDao = adresDao;
+    }
+
+    public DosyaDAO getDosyaDao() {
+        if (dosyaDao == null) {
+            this.dosyaDao = new DosyaDAO();
+        }
+        return dosyaDao;
+    }
+
+    public void setDosyaDao(DosyaDAO dosyaDao) {
+        this.dosyaDao = dosyaDao;
     }
 
 }
